@@ -13,8 +13,6 @@ int main() {
     sf::Texture texture;
     sf::Sprite sprite;
 
-    bool stateChanged = true;
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
