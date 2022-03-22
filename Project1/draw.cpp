@@ -22,16 +22,16 @@ int main() {
                 break;
             }
         }
-            for (int x = 0; x < IMAGE_WIDTH; x++) {
-                for (int y = 0; y < IMAGE_HEIGHT; y++) {
-                    double real = (x - IMAGE_WIDTH / 2.0) * zoom + offsetX;
-                    double imag = (y - IMAGE_HEIGHT / 2.0) * zoom + offsetY;
-                    int value = mandelbrot(real, imag, MAX);
-                    image.setPixel(x, y, getColor(value));
-                }
+        for (int x = 0; x < IMAGE_WIDTH; x++) {
+            for (int y = 0; y < IMAGE_HEIGHT; y++) {
+                double real = (x - IMAGE_WIDTH / 2.0) * zoom + offsetX;
+                double imag = (y - IMAGE_HEIGHT / 2.0) * zoom + offsetY;
+                int value = mandelbrot(real, imag, MAX);
+                image.setPixel(x, y, getColor(value));
             }
-            texture.loadFromImage(image);
-            sprite.setTexture(texture);
+        }
+        texture.loadFromImage(image);
+        sprite.setTexture(texture);
 
         window.clear();
         window.draw(sprite);
@@ -67,39 +67,39 @@ int mandelbrot(double startReal, double startImag, int maximum) {
 }
 
 sf::Color getColor(int iterations) {
-    std::tuple<int, int, int> RGB;
+    sf::Color result;
     if (iterations == -1) {
-        std::get<0>(RGB) = 0;
-        std::get<1>(RGB) = 0;
-        std::get<2>(RGB) = 0;
+        result.r = 0;
+        result.g = 0;
+        result.b = 0;
     }
     else if (iterations == 0) {
-        std::get<0>(RGB) = 255;
-        std::get<1>(RGB) = 0;
-        std::get<2>(RGB) = 0;
+        result.r = 255;
+        result.g = 0;
+        result.b = 0;
     }
     else {
         if (iterations < 16) {
-            std::get<0>(RGB) = 16 * (16 - iterations);
-            std::get<1>(RGB) = 0;
-            std::get<2>(RGB) = 16 * iterations - 1;
+            result.r = 16 * (16 - iterations);
+            result.g = 0;
+            result.b = 16 * iterations - 1;
         }
         else if (iterations < 32) {
-            std::get<0>(RGB) = 0;
-            std::get<1>(RGB) = 16 * (iterations - 16);
-            std::get<2>(RGB) = 16 * (32 - iterations) - 1;
+            result.r = 0;
+            result.g = 16 * (iterations - 16);
+            result.b = 16 * (32 - iterations) - 1;
         }
         else if (iterations < 64) {
-            std::get<0>(RGB) = 8 * (iterations - 32);
-            std::get<1>(RGB) = 8 * (64 - iterations) - 1;
-            std::get<2>(RGB) = 0;
+            result.r = 8 * (iterations - 32);
+            result.g = 8 * (64 - iterations) - 1;
+            result.b = 0;
         }
         else {
-            std::get<0>(RGB) = 255 - (iterations - 64) * 4;
-            std::get<1>(RGB) = 0;
-            std::get<2>(RGB) = 0;
+            result.r = 255 - (iterations - 64) * 4;
+            result.g = 0;
+            result.b = 0;
         }
     }
 
-    return sf::Color(std::get<0>(RGB), std::get<1>(RGB), std::get<2>(RGB));
+    return result;
 }
