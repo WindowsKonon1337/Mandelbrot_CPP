@@ -37,7 +37,6 @@ int main() {
         window.draw(sprite);
         window.display();
 
-        stateChanged = false;
     }
 
     return 0;
